@@ -15,7 +15,9 @@ canvas {
   z-index: 0;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,calc(-50% - 20px));
+  height: 70vh !important;
+  width: 70vh !important;
 }
 
 video {
@@ -28,9 +30,9 @@ video {
   z-index: 0;
   top: 50%;
   left: 50%;
-  width: 640px;
+  width: 70vh;
   justify-content: space-between;
-  transform: translate(-50%,350px);
+  transform: translate(-50%,35vh);
 }
 
 #capture_btn {

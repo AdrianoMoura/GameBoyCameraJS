@@ -88,7 +88,6 @@ function setup() {
 function draw() {
 
   video.loadPixels();
-
   
   if (video.width > 300) {
     console.log(video.width, video.height);
