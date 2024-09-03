@@ -87,6 +87,8 @@ function draw() {
 
   video.loadPixels();
   
+  console.log(video.width, video.height);
+
   if (video.width > 300) {
     videoWidth = videoHeight / video.height * video.width;
 
@@ -106,11 +108,20 @@ function draw() {
 
     pixels = gbFilter();
 
+    lastColor = ''
+
     for (let y = 0; y < pixels.length; y++) {
       for (let x = 0; x < pixels[y].length; x++) {
         if (x == 0 || x == pixels.length - 1 || y == 0 || y == pixels[y].length - 1) {
           fill('#000000'); // Make a black border on the canvas
         } else {
+
+          if (lastColor != pixels[y][x]) {
+            lastColor = pixels[y][x];
+
+            console.log(pixels[y][x], y, x, video.width, video.height);
+          }
+
           fill(pixels[y][x]);
         }
         rect(pixelSize * x, pixelSize * y, pixelSize, pixelSize);
@@ -129,12 +140,28 @@ function videoToPixelArr() {
   pixels = [];
 
   // Made to crop the original image into a square
-  const leftCrop = parseInt((video.width / 2) - video.height / 2);
-  const rightCrop = parseInt((video.width / 2) + video.height / 2);
+  let xStart;
+  let xEnd;
+  let yStart;
+  let yEnd;
+  
+  if (video.width > video.height) {
+    // For landscape video
+    xStart = parseInt((video.width / 2) - video.height / 2);
+    xEnd = parseInt((video.width / 2) + video.height / 2);
+    yStart = 0;
+    yEnd = video.height;
+  } else {
+    // For portrait video
+    xStart = 0;
+    xEnd = video.width;
+    yStart = parseInt((video.height / 2) - video.width / 2);
+    yEnd = parseInt((video.height / 2) + video.width / 2);
+  }
 
-  for (let y = 0; y < video.height; y++) {
-    pixels[y] = []
-    for (let x = leftCrop; x < rightCrop; x++) {
+  for (let y = yStart; y < yEnd; y++) {
+    pixels[y - yStart] = []
+    for (let x = xStart; x < xEnd; x++) {
 
       const pixelIndex = (x + y * video.width) * 4;
 
@@ -143,7 +170,7 @@ function videoToPixelArr() {
       const g = video.pixels[pixelIndex + 1];
       const b = video.pixels[pixelIndex + 2];
 
-      pixels[y][x - leftCrop] = [r, g, b];
+      pixels[y - yStart][x - xStart] = [r, g, b];
     }
   }
 
