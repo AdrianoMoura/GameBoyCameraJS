@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background-color: #000;
@@ -11,11 +12,11 @@ html, body {
 
 canvas {
   display: block;
-  position:absolute;
+  position: absolute;
   z-index: 0;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,calc(-50% - 20px));
+  transform: translate(-50%, calc(-50% - 20px));
   height: 70vh !important;
   width: 70vh !important;
 }
@@ -26,13 +27,13 @@ video {
 
 #btns {
   display: flex;
-  position:absolute;
+  position: absolute;
   z-index: 0;
   top: 50%;
   left: 50%;
   width: 70vh;
   justify-content: space-between;
-  transform: translate(-50%,35vh);
+  transform: translate(-50%, 35vh);
 }
 
 #capture_btn {
@@ -40,6 +41,7 @@ video {
   height: 64px;
   background-image: url('./camera_icon.png');
   cursor: pointer;
+  image-rendering: pixelated;
 }
 
 .palette_change {
@@ -51,6 +53,7 @@ video {
   height: 64px;
   background-image: url('./Arrow_Left.png');
   cursor: pointer;
+  image-rendering: pixelated;
 }
 
 #palette_change_plus {
@@ -58,4 +61,42 @@ video {
   height: 64px;
   background-image: url('./Arrow_Right.png');
   cursor: pointer;
+  image-rendering: pixelated;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+
+  #capture_btn {
+    width: 128px;
+    height: 128px;
+    background-size: contain;
+  }
+
+
+  #palette_change_minus {
+    width: 128px;
+    height: 128px;
+    background-size: contain;
+  }
+
+  #palette_change_plus {
+    width: 128px;
+    height: 128px;
+    background-size: contain;
+  }
+
+}
+
+@media only screen and (orientation : portrait)  {
+  canvas {
+    transform: translate(-50%, calc(-50% - 20px));
+    height: 70vw !important;
+    width: 70vw !important;
+  }
+
+  #btns {
+    width: 70vw;
+    justify-content: space-between;
+    transform: translate(-50%, 35vw);
+  }  
 }
