@@ -73,12 +73,12 @@ let selectedPalette = 0;
 function setup() {
 
   video = createCapture(VIDEO);
+
   videoHeight = 128;
-  videoWidth = videoHeight / 720 * 1280;
 
   createCanvas(videoHeight * pixelSize, videoHeight * pixelSize);
 
-  video.size(videoWidth, videoHeight);
+  console.log(video.width, video.height);
 
   document.getElementById('capture_btn').addEventListener('click', captureImage);
   document.getElementById('palette_change_minus').addEventListener('click', () => changePalette(-1));
@@ -88,6 +88,14 @@ function setup() {
 function draw() {
 
   video.loadPixels();
+
+  
+  if (video.width > 300) {
+    console.log(video.width, video.height);
+    videoWidth = videoHeight / video.height * video.width;
+
+    video.size(videoWidth, videoHeight);
+  }
 
   noStroke();
 
@@ -107,6 +115,7 @@ function draw() {
         if (x == 0 || x == pixels.length - 1 || y == 0 || y == pixels[y].length - 1) {
           fill('#000000')
         } else {
+
           fill(pixels[y][x]);
         }
         rect(pixelSize * x, pixelSize * y, pixelSize, pixelSize);
@@ -120,27 +129,9 @@ function draw() {
   }
 }
 
-// This function calculate the average brightness for each color and returns an grayscale version of the pixels
-function grayscale() {
-  for (let y = 0; y < pixels.length; y++) {
-    for (let x = 0; x < pixels[y].length; x++) {
-
-      const r = pixels[y][x][0];
-      const g = pixels[y][x][1];
-      const b = pixels[y][x][2];
-
-      // Calculate the average applying an weight for each one, considering the human visual perception of each color
-      const avg = r * 0.3 + g * 0.59 + b * 0.11;
-
-      pixels[y][x] = avg
-    }
-  }
-
-  return pixels
-}
-
 // Convert the video stream pixel array to a two dimensional matrix containing the Red, Green, Blue values for each pixel
 function videoToPixelArr() {
+  pixels = [];
 
   // Made to crop the original image into a square
   const leftCrop = parseInt((video.width / 2) - video.height / 2);
@@ -162,6 +153,25 @@ function videoToPixelArr() {
   }
 
   return pixels;
+}
+
+// This function calculate the average brightness for each color and returns an grayscale version of the pixels
+function grayscale() {
+  for (let y = 0; y < pixels.length; y++) {
+    for (let x = 0; x < pixels[y].length; x++) {
+
+      const r = pixels[y][x][0];
+      const g = pixels[y][x][1];
+      const b = pixels[y][x][2];
+
+      // Calculate the average applying an weight for each one, considering the human visual perception of each color
+      const avg = r * 0.3 + g * 0.59 + b * 0.11;
+
+      pixels[y][x] = avg
+    }
+  }
+
+  return pixels
 }
 
 // This dithering function was made thanks to the "The Coding Train" video about Floyd-Steinberg Dithering (https://www.youtube.com/watch?v=0L2n8Tg2FwI)
@@ -249,7 +259,7 @@ function changePalette(n) {
   let newPalette = selectedPalette + n;
 
   if (newPalette < 0) {
-    newPalette = maxPalette-1;
+    newPalette = maxPalette - 1;
   } else if (newPalette >= maxPalette) {
     newPalette = 0;
   }
