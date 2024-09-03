@@ -21,10 +21,6 @@ canvas {
   width: 70vh !important;
 }
 
-video {
-  opacity: 0;
-}
-
 #btns {
   display: flex;
   position: absolute;

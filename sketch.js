@@ -73,6 +73,7 @@ let selectedPalette = 0;
 function setup() {
 
   video = createCapture(VIDEO);
+  video.hide();
 
   videoSize = 128;
 
