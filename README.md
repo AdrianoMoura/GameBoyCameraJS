@@ -7,7 +7,7 @@ This is a simple project that emulate the GameBoy Camera aesthetic using JavaScr
 ## Features
 
 - **Webcam Integration:** Captures live video feed from your webcam and applies the GameBoy Camera aesthetic in real-time.
-- **Dithering Effect:** Implements the Floyd-Steinberg Dithering algorithm to simulate the pixelated, monochrome look.
+- **Dithering Effect:** Implements the [Floyd-Steinberg Dithering algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering) to simulate the pixelated, monochrome look.
 
 ## Getting Started
 
