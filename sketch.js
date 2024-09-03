@@ -139,6 +139,31 @@ function grayscale() {
   return pixels
 }
 
+// Convert the video stream pixel array to a two dimensional matrix containing the Red, Green, Blue values for each pixel
+function videoToPixelArr() {
+
+  // Made to crop the original image into a square
+  const leftCrop = parseInt((video.width / 2) - video.height / 2);
+  const rightCrop = parseInt((video.width / 2) + video.height / 2);
+
+  for (let y = 0; y < video.height; y++) {
+    pixels[y] = []
+    for (let x = leftCrop; x < rightCrop; x++) {
+
+      const pixelIndex = (x + y * video.width) * 4;
+
+      // Get each color, the pixels property of the p5.js video stream is a one dimensional array like this [r,g,b,a,r,g,b,a...] this code rearange it in a matrix
+      const r = video.pixels[pixelIndex + 0];
+      const g = video.pixels[pixelIndex + 1];
+      const b = video.pixels[pixelIndex + 2];
+
+      pixels[y][x - leftCrop] = [r, g, b];
+    }
+  }
+
+  return pixels;
+}
+
 // This dithering function was made thanks to the "The Coding Train" video about Floyd-Steinberg Dithering (https://www.youtube.com/watch?v=0L2n8Tg2FwI)
 function dithering() {
   for (let y = 0; y < pixels.length - 1; y++) {
@@ -203,31 +228,6 @@ function gbFilter() {
   }
 
   return pixels
-}
-
-// Convert the video stream pixel array to a two dimensional matrix containing the Red, Green, Blue values for each pixel
-function videoToPixelArr() {
-
-  // Made to crop the original image into a square
-  const leftCrop = parseInt((video.width / 2) - video.height / 2);
-  const rightCrop = parseInt((video.width / 2) + video.height / 2);
-
-  for (let y = 0; y < video.height; y++) {
-    pixels[y] = []
-    for (let x = leftCrop; x < rightCrop; x++) {
-
-      const pixelIndex = (x + y * video.width) * 4;
-
-      // Get each color, the pixels property of the p5.js video stream is a one dimensional array like this [r,g,b,a,r,g,b,a...] this code rearange it in a matrix
-      const r = video.pixels[pixelIndex + 0];
-      const g = video.pixels[pixelIndex + 1];
-      const b = video.pixels[pixelIndex + 2];
-
-      pixels[y][x - leftCrop] = [r, g, b];
-    }
-  }
-
-  return pixels;
 }
 
 function captureImage() {
