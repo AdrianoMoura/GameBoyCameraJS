@@ -86,7 +86,7 @@ function draw() {
 
     for (let y = 0; y < pixels.length; y++) {
       for (let x = 0; x < pixels[y].length; x++) {
-        if (x == 0 || x == pixels.length - 1 || y == 0 || y == y.length - 1) {
+        if (x == 0 || x == pixels.length - 1 || y == 0 || y == pixels[y].length - 1) {
           fill('#000000')
         } else {
           fill(pixels[y][x]);
