@@ -86,8 +86,6 @@ function setup() {
 function draw() {
 
   video.loadPixels();
-  
-  console.log(video.width, video.height);
 
   // there is a delay for the Capture from p5js, this checking waits until the video stream is ready to be resized
   if (video.width > 300) {
