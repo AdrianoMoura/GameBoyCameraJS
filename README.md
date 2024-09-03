@@ -2,7 +2,7 @@
 
 This is a simple project that emulate the GameBoy Camera aesthetic using JavaScript, p5.js, and your webcam. It applies the Floyd-Steinberg dithering algorithm to achieve the pixelated style similar of the GameBoy.
 
-![Sample](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/grogu.png?raw=true)
+![Sample](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/samples/grogu.png?raw=true)
 
 ## Try it 
 
@@ -50,3 +50,6 @@ This project is licensed under the MIT License.
 ## Acknowledgments
 
 - Inspired by The Coding Train - Coding Challenge #90: Floyd-Steinberg Dithering (https://www.youtube.com/watch?v=0L2n8Tg2FwI) 🚂
+
+
+![Photo1](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/samples/photo1.jpg?raw=true) ![Photo2](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/samples/photo2.jpg?raw=true) ![Photo3](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/samples/photo3.jpg?raw=true) ![Photo4](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/samples/photo4.jpg?raw=true) ![Photo5](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/samples/photo5.jpg?raw=true) ![Photo6](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/samples/photo6.jpg?raw=true) ![Photo7](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/samples/photo7.jpg?raw=true)
