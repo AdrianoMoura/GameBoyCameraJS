@@ -85,6 +85,7 @@ function setup() {
 
 function draw() {
 
+  // I noticed that loading the pixels before resizing causes the image to glitch during loading. I decided to leave it as is because I liked the visuals.
   video.loadPixels();
 
   // there is a delay for the Capture from p5js, this checking waits until the video stream is ready to be resized
