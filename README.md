@@ -4,6 +4,10 @@ This is a simple project that emulate the GameBoy Camera aesthetic using JavaScr
 
 ![Sample](https://github.com/AdrianoMoura/GameBoyCameraJS/blob/master/grogu.png?raw=true)
 
+## Try it 
+
+https://adrianomoura.github.io/GameBoyCameraJS/
+
 ## Features
 
 - **Webcam Integration:** Captures live video feed from your webcam and applies the GameBoy Camera aesthetic in real-time.
