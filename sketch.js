@@ -74,9 +74,9 @@ function setup() {
 
   video = createCapture(VIDEO);
 
-  videoHeight = 128;
+  videoSize = 128;
 
-  createCanvas(videoHeight * pixelSize, videoHeight * pixelSize);
+  createCanvas(videoSize * pixelSize, videoSize * pixelSize);
 
   document.getElementById('capture_btn').addEventListener('click', captureImage);
   document.getElementById('palette_change_minus').addEventListener('click', () => changePalette(-1));
@@ -89,8 +89,16 @@ function draw() {
   
   console.log(video.width, video.height);
 
+  // there is a delay for the Capture from p5js, this checking waits until the video stream is ready to be resized
   if (video.width > 300) {
-    videoWidth = videoHeight / video.height * video.width;
+    //Check for camera orientation
+    if (video.width > video.height) {
+      videoWidth = videoSize / video.height * video.width;
+      videoHeight = videoSize;
+    } else {
+      videoWidth = videoSize;
+      videoHeight = videoSize / video.width * video.height;
+    }
 
     video.size(videoWidth, videoHeight);
   }
@@ -108,20 +116,11 @@ function draw() {
 
     pixels = gbFilter();
 
-    lastColor = ''
-
     for (let y = 0; y < pixels.length; y++) {
       for (let x = 0; x < pixels[y].length; x++) {
         if (x == 0 || x == pixels.length - 1 || y == 0 || y == pixels[y].length - 1) {
           fill('#000000'); // Make a black border on the canvas
         } else {
-
-          if (lastColor != pixels[y][x]) {
-            lastColor = pixels[y][x];
-
-            console.log(pixels[y][x], y, x, video.width, video.height);
-          }
-
           fill(pixels[y][x]);
         }
         rect(pixelSize * x, pixelSize * y, pixelSize, pixelSize);
@@ -139,7 +138,7 @@ function draw() {
 function videoToPixelArr() {
   pixels = [];
 
-  // Made to crop the original image into a square
+  // Crop the original image into a square
   let xStart;
   let xEnd;
   let yStart;
@@ -177,7 +176,7 @@ function videoToPixelArr() {
   return pixels;
 }
 
-// This function calculate the average brightness for each color and returns an grayscale version of the pixels
+// Calculate the average brightness for each color and returns an grayscale version of the pixels
 function grayscale() {
   for (let y = 0; y < pixels.length; y++) {
     for (let x = 0; x < pixels[y].length; x++) {
@@ -267,6 +266,7 @@ function captureImage() {
   saveCanvas('my_photo.jpg');
 }
 
+// Create a flash effect when an image is captured
 function captureAnim() {
   if (captureAnimCounter >= 20) {
     captureAnimCounter = 0;
@@ -276,6 +276,7 @@ function captureAnim() {
   }
 }
 
+// Change the selected palette
 function changePalette(n) {
   const maxPalette = gameboyPalette.length;
   let newPalette = selectedPalette + n;
