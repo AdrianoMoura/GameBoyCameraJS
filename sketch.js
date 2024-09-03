@@ -116,10 +116,10 @@ function gbFilter() {
   for (let y = 0; y < pixels.length; y++) {
     for (let x = 0; x < pixels[y].length; x++) {
 
-      const c = pixels[y][x];
+      const c = pixels[y][x] < 0 ? 0 : pixels[y][x] > 255 ? 255 : pixels[y][x];
 
       const newC = floor(map(c, 0, 255, 3, 0));
-
+      
       pixels[y][x] = palette[newC];
     }
   }
