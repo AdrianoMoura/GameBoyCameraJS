@@ -1,0 +1,23 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #FFF;
+  font-family: 'Courier';
+  font-size: 8pt;
+  letter-spacing: 2pt;
+  line-height: 8pt;
+}
+
+canvas {
+  display: block;
+  position:absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+video {
+  opacity: 0;
+}
