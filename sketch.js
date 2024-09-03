@@ -8,7 +8,7 @@ const gameboyPalette = [
 let video;
 let pixels = [];
 
-const pixelSize = 6;
+const pixelSize = 5;
 
 function setup() {
 
