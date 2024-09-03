@@ -78,8 +78,6 @@ function setup() {
 
   createCanvas(videoHeight * pixelSize, videoHeight * pixelSize);
 
-  console.log(video.width, video.height);
-
   document.getElementById('capture_btn').addEventListener('click', captureImage);
   document.getElementById('palette_change_minus').addEventListener('click', () => changePalette(-1));
   document.getElementById('palette_change_plus').addEventListener('click', () => changePalette(1));
@@ -90,7 +88,6 @@ function draw() {
   video.loadPixels();
   
   if (video.width > 300) {
-    console.log(video.width, video.height);
     videoWidth = videoHeight / video.height * video.width;
 
     video.size(videoWidth, videoHeight);
@@ -112,9 +109,8 @@ function draw() {
     for (let y = 0; y < pixels.length; y++) {
       for (let x = 0; x < pixels[y].length; x++) {
         if (x == 0 || x == pixels.length - 1 || y == 0 || y == pixels[y].length - 1) {
-          fill('#000000')
+          fill('#000000'); // Make a black border on the canvas
         } else {
-
           fill(pixels[y][x]);
         }
         rect(pixelSize * x, pixelSize * y, pixelSize, pixelSize);
