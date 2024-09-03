@@ -85,7 +85,6 @@ function setup() {
 }
 
 function draw() {
-
   // I noticed that loading the pixels before resizing causes the image to glitch during loading. I decided to leave it as is because I liked the visuals.
   video.loadPixels();
 
@@ -143,7 +142,7 @@ function videoToPixelArr() {
   let xEnd;
   let yStart;
   let yEnd;
-  
+
   if (video.width > video.height) {
     // For landscape video
     xStart = parseInt((video.width / 2) - video.height / 2);
@@ -165,9 +164,9 @@ function videoToPixelArr() {
       const pixelIndex = (x + y * video.width) * 4;
 
       // Get each color, the pixels property of the p5.js video stream is a one dimensional array like this [r,g,b,a,r,g,b,a...] this code rearange it in a matrix
-      const r = video.pixels[pixelIndex + 0];
-      const g = video.pixels[pixelIndex + 1];
-      const b = video.pixels[pixelIndex + 2];
+      const r = video.pixels[pixelIndex + 0] || 0;
+      const g = video.pixels[pixelIndex + 1] || 0;
+      const b = video.pixels[pixelIndex + 2] || 0;
 
       pixels[y - yStart][x - xStart] = [r, g, b];
     }
@@ -250,7 +249,7 @@ function gbFilter() {
   for (let y = 0; y < pixels.length; y++) {
     for (let x = 0; x < pixels[y].length; x++) {
 
-      const c = pixels[y][x] < 0 ? 0 : pixels[y][x] > 255 ? 255 : pixels[y][x];
+      const c = pixels[y][x];
 
       const newC = floor(map(c, 0, 255, 3, 0));
 
@@ -258,7 +257,7 @@ function gbFilter() {
     }
   }
 
-  return pixels
+  return pixels;
 }
 
 function captureImage() {
