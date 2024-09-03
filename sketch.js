@@ -189,7 +189,7 @@ function dithering() {
 // Applies the gameboy palette to the grayscale dithering image
 function gbFilter() {
 
-  const palette = gameboyPalette;
+  const palette = gameboyPalette[selectedPalette];
 
   for (let y = 0; y < pixels.length; y++) {
     for (let x = 0; x < pixels[y].length; x++) {
@@ -198,7 +198,7 @@ function gbFilter() {
 
       const newC = floor(map(c, 0, 255, 3, 0));
 
-      pixels[y][x] = palette[selectedPalette][newC];
+      pixels[y][x] = palette[newC];
     }
   }
 
