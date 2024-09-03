@@ -32,6 +32,8 @@ https://adrianomoura.github.io/GameBoyCameraJS/
 
 - Open the `index.html` file in your browser to start the webcam feed.
 - The live video feed from your webcam will be processed to emulate the GameBoy Camera aesthetic.
+- Click on the camera icon to capture an image
+- Click on the arrows to change the color palette
 
 ## How It Works
 
