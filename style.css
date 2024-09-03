@@ -21,3 +21,39 @@ canvas {
 video {
   opacity: 0;
 }
+
+#btns {
+  display: flex;
+  position:absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 640px;
+  justify-content: space-between;
+  transform: translate(-50%,350px);
+}
+
+#capture_btn {
+  width: 64px;
+  height: 64px;
+  background-image: url('./camera_icon.png');
+  cursor: pointer;
+}
+
+.palette_change {
+  display: flex;
+}
+
+#palette_change_minus {
+  width: 64px;
+  height: 64px;
+  background-image: url('./Arrow_Left.png');
+  cursor: pointer;
+}
+
+#palette_change_plus {
+  width: 64px;
+  height: 64px;
+  background-image: url('./Arrow_Right.png');
+  cursor: pointer;
+}

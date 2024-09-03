@@ -1,14 +1,56 @@
 const gameboyPalette = [
-  '#9bbc0f',
-  '#8bac0f',
-  '#306230',
-  '#0f380f'
+  [
+    '#9bbc0f',
+    '#8bac0f',
+    '#306230',
+    '#0f380f'
+  ],
+  [
+    '#a9a77f',
+    '#74783f',
+    '#3f4900',
+    '#1a1b00'
+  ],
+  [
+    '#fff6d3',
+    '#f9a875',
+    '#eb6b6f',
+    '#7c3f58'
+  ],
+  [
+    '#8be5ff',
+    '#608fcf',
+    '#7550e8',
+    '#622e4c'
+  ],
+  [
+    '#e9efec',
+    '#a0a08b',
+    '#27232a',
+    '#211e20'
+  ],
+  [
+    '#f8e3c4',
+    '#cc3495',
+    '#6b1fb1',
+    '#0b0630'
+  ],
+  [
+    '#cfab51',
+    '#9d654c',
+    '#4d222c',
+    '#210b1b'
+  ]
 ]
 
 let video;
 let pixels = [];
 
 const pixelSize = 5;
+
+let isCapturing = false;
+let captureAnimCounter = 0;
+let selectedPalette = 0;
 
 function setup() {
 
@@ -19,25 +61,43 @@ function setup() {
   createCanvas(videoHeight * pixelSize, videoHeight * pixelSize);
 
   video.size(videoWidth, videoHeight);
+
+  document.getElementById('capture_btn').addEventListener('click', captureImage);
+  document.getElementById('palette_change_minus').addEventListener('click', () => changePalette(-1));
+  document.getElementById('palette_change_plus').addEventListener('click', () => changePalette(1));
 }
 
 function draw() {
+
   video.loadPixels();
-
-  pixels = videoToPixelArr();
-
-  pixels = grayscale();
-
-  pixels = dithering();
-
-  pixels = gbFilter();
 
   noStroke();
 
-  for (let y = 0; y < pixels.length; y++) {
-    for (let x = 0; x < pixels[y].length; x++) {
-      fill(pixels[y][x]);
-      rect(pixelSize * x, pixelSize * y, pixelSize, pixelSize);
+  captureAnim();
+
+  if (!isCapturing) {
+    pixels = videoToPixelArr();
+
+    pixels = grayscale();
+
+    pixels = dithering();
+
+    pixels = gbFilter();
+
+    for (let y = 0; y < pixels.length; y++) {
+      for (let x = 0; x < pixels[y].length; x++) {
+        if (x == 0 || x == pixels.length - 1 || y == 0 || y == y.length - 1) {
+          fill('#000000')
+        } else {
+          fill(pixels[y][x]);
+        }
+        rect(pixelSize * x, pixelSize * y, pixelSize, pixelSize);
+      }
+    }
+  } else {
+    if (captureAnimCounter >= 10) {
+      fill(255, 255, 255, 10);
+      rect(0, 0, canvas.width, canvas.height);
     }
   }
 }
@@ -119,8 +179,8 @@ function gbFilter() {
       const c = pixels[y][x] < 0 ? 0 : pixels[y][x] > 255 ? 255 : pixels[y][x];
 
       const newC = floor(map(c, 0, 255, 3, 0));
-      
-      pixels[y][x] = palette[newC];
+
+      pixels[y][x] = palette[selectedPalette][newC];
     }
   }
 
@@ -145,9 +205,36 @@ function videoToPixelArr() {
       const g = video.pixels[pixelIndex + 1];
       const b = video.pixels[pixelIndex + 2];
 
-      pixels[y][x-leftCrop] = [r, g, b];
+      pixels[y][x - leftCrop] = [r, g, b];
     }
   }
 
   return pixels;
+}
+
+function captureImage() {
+  isCapturing = true;
+  saveCanvas('my_photo.jpg');
+}
+
+function captureAnim() {
+  if (captureAnimCounter >= 20) {
+    captureAnimCounter = 0;
+    isCapturing = false;
+  } else if (isCapturing) {
+    captureAnimCounter++;
+  }
+}
+
+function changePalette(n) {
+  const maxPalette = gameboyPalette.length;
+  let newPalette = selectedPalette + n;
+
+  if (newPalette < 0) {
+    newPalette = maxPalette-1;
+  } else if (newPalette >= maxPalette) {
+    newPalette = 0;
+  }
+
+  selectedPalette = newPalette
 }
